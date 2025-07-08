@@ -1,41 +1,103 @@
 const mathsLessons = [
   {
     title: "Leçon 1 : Les fonctions",
-    fullContent: "Une fonction est une relation entre un ensemble de valeurs d’entrée (domaine) et un ensemble de valeurs de sortie (image). Par exemple, f(x) = x² associe à chaque x son carré.",
-    summary: "Une fonction associe chaque élément d’un ensemble à un unique élément d’un autre ensemble.",
+    definition: "Une fonction est une relation entre un ensemble de valeurs d’entrée (domaine) et un ensemble de valeurs de sortie (image).",
+    formula: "f(x) = x² (exemple de fonction quadratique)",
+    example: "Pour f(x) = x², si x = 2, alors f(2) = 4.",
     exercises: [
       {
-        question: "Calculez f(2) pour f(x) = x² + 3.",
-        correction: "f(2) = 2² + 3 = 4 + 3 = 7",
-        explanation: "On remplace x par 2 dans l’expression de la fonction : f(2) = 2² + 3 = 4 + 3 = 7."
+        question: "Calculez f(3) pour f(x) = x² + 2.",
+        correction: "f(3) = 3² + 2 = 11",
+        explanation: "Remplacez x par 3 : f(3) = 3² + 2 = 9 + 2 = 11."
       },
       {
-        question: "Quelle est la dérivée de f(x) = 2x³ ?",
-        correction: "f'(x) = 6x²",
-        explanation: "On applique la règle de dérivation : la dérivée de x^n est n*x^(n-1). Ici, f(x) = 2x³, donc f'(x) = 3*2x^(3-1) = 6x²."
+        question: "Quelle est la dérivée de f(x) = 3x² ?",
+        correction: "f'(x) = 6x",
+        explanation: "La dérivée de x^n est n*x^(n-1). Ici, f(x) = 3x², donc f'(x) = 2*3x^(2-1) = 6x."
       },
-      // Ajoute 98 autres exercices ici
+      // Ajoute 98 autres exercices variés ici
     ],
     quote: "Chaque fonction apprise est une étape vers la réussite !"
   },
   {
     title: "Leçon 2 : Les dérivées",
-    fullContent: "La dérivée d’une fonction mesure son taux de variation. Par exemple, la dérivée de x² est 2x.",
-    summary: "La dérivée donne la pente de la tangente à la courbe en un point donné.",
+    definition: "La dérivée d’une fonction mesure son taux de variation.",
+    formula: "f'(x) = nx^(n-1) pour f(x) = x^n",
+    example: "Pour f(x) = x², f'(x) = 2x. À x = 1, f'(1) = 2.",
     exercises: [
       {
         question: "Calculez la dérivée de f(x) = sin(x).",
         correction: "f'(x) = cos(x)",
-        explanation: "La dérivée de sin(x) est cos(x), selon les règles de dérivation des fonctions trigonométriques."
+        explanation: "La dérivée de sin(x) est cos(x)."
       },
       {
         question: "Trouvez l’équation de la tangente à f(x) = x² en x = 1.",
         correction: "y = 2x - 1",
-        explanation: "La dérivée de f(x) = x² est f'(x) = 2x. À x = 1, f'(1) = 2 (pente). La valeur de f(1) = 1² = 1. L’équation de la tangente est y - f(1) = f'(1)(x - 1), soit y - 1 = 2(x - 1), donc y = 2x - 1."
+        explanation: "f'(x) = 2x, f'(1) = 2, f(1) = 1. Équation : y - 1 = 2(x - 1) => y = 2x - 1."
       },
-      // Ajoute 98 autres exercices ici
+      // Ajoute 98 autres exercices
     ],
     quote: "Maîtrise les dérivées, et le bac sera à ta portée !"
   },
-  // Ajoute 3 autres leçons ici (pour atteindre 5 leçons)
+  // Ajoute 3 autres leçons (total 5)
+];
+
+// Exemple pour Français
+const françaisLessons = [
+  {
+    title: "Leçon 1 : La dissertation",
+    definition: "La dissertation est un exercice d’argumentation structuré en introduction, développement et conclusion.",
+    formula: "Structure : Intro (problématique), 2-3 parties, Conclusion",
+    example: "Exemple de problématique : Comment l’auteur utilise-t-il le personnage principal pour critiquer la société ?",
+    exercises: [
+      {
+        question: "Rédigez une introduction pour une dissertation sur le thème de la liberté.",
+        correction: "Introduction : La liberté, valeur fondamentale, soulève des débats complexes... (exemple complet).",
+        explanation: "L’introduction doit poser le sujet, la problématique et le plan."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Écris avec passion, et ta dissertation brillera !"
+  },
+  // Ajoute 4 autres leçons
+];
+
+// Exemple pour Sport
+const sportLessons = [
+  {
+    title: "Leçon 1 : Lancer de poids",
+    definition: "Le lancer de poids est une épreuve d’athlétisme où l’athlète projette un poids métallique le plus loin possible.",
+    formula: "Technique : Position de départ, rotation, poussée.",
+    example: "<video src='https://example.com/lancer-de-poids.mp4' controls></video>",
+    exercises: [
+      {
+        question: "Décrivez la position de départ pour le lancer de poids.",
+        correction: "Pieds écartés, poids tenu près du cou, corps incliné.",
+        explanation: "La position initiale maximise la puissance de la poussée."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Lance fort, aime tendrement !"
+  },
+  // Ajoute 3 autres leçons
+];
+
+// Exemple pour Dessin
+const dessinLessons = [
+  {
+    title: "Leçon 1 : Techniques de croquis",
+    definition: "Le croquis est un dessin rapide pour capturer une idée ou une forme.",
+    formula: "Matériel : Crayon HB, gomme, papier.",
+    example: "Astuce : Commencez par des formes géométriques simples avant de détailler.",
+    exercises: [
+      {
+        question: "Dessinez un croquis d’un visage humain en 10 minutes.",
+        correction: "Utilisez des cercles pour la tête et des lignes pour les traits.",
+        explanation: "Un croquis efficace repose sur des proportions correctes."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Chaque trait est une étape vers la perfection !"
+  },
+  // Ajoute 3 autres leçons
 ];
