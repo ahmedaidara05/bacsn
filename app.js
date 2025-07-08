@@ -1,46 +1,63 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 // Configuration Firebase
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAu2DHDUT2hBz1NfbLWlBkoPTUR5FAmy-U",
+  authDomain: "bacappsenegal.firebaseapp.com",
+  projectId: "bacappsenegal",
+  storageBucket: "bacappsenegal.firebasestorage.app",
+  messagingSenderId: "509086558590",
+  appId: "1:509086558590:web:cd492dc7d33e7f802bab2f",
+  measurementId: "G-Q118M9E2ME"
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Notifications quotidiennes (365 messages)
+const notifications = [
+  "Aujourd’hui, tu vas conquérir une nouvelle leçon !",
+  "Chaque pas compte vers ton succès au bac !",
+  // Ajoute 363 autres messages ici
+];
 
 // Citations motivantes
 const quotes = [
-  "Chaque effort te rapproche de ton objectif ! Continue !",
+  "Chaque effort te rapproche de ton objectif !",
   "Le bac, c’est juste une étape. Tu vas briller !",
-  "Apprends aujourd’hui, réussis demain !"
+  // Ajoute d’autres citations
 ];
 
-// Afficher une citation aléatoire
-function displayQuote() {
-  const quoteElement = document.getElementById("quote");
-  quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+// Afficher une notification quotidienne à 8h00
+function showDailyNotification() {
+  const now = new Date();
+  if (now.getHours() === 8 && now.getMinutes() === 0) {
+    const notification = document.getElementById("notification");
+    const notificationText = document.getElementById("notification-text");
+    const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    notificationText.textContent = notifications[dayOfYear % notifications.length];
+    notification.classList.remove("hidden");
+  }
 }
+document.getElementById("close-notification").addEventListener("click", () => {
+  document.getElementById("notification").classList.add("hidden");
+});
+setInterval(showDailyNotification, 60 * 1000); // Vérifie toutes les minutes
 
-// Authentification avec Google
+// Authentification
 document.getElementById("google-login-btn").addEventListener("click", () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider)
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
     .then((result) => {
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("main-screen").classList.remove("hidden");
-      document.getElementById("motivation").classList.remove("hidden");
-      displayQuote();
+      showMainScreen();
     })
     .catch((error) => {
-      console.error("Erreur de connexion:", error);
+      console.error("Erreur de connexion Google:", error);
       alert("Erreur de connexion: " + error.message);
     });
 });
 
-// Authentification avec Email/Mot de passe
 document.getElementById("email-login-btn").addEventListener("click", () => {
   document.getElementById("email-login-form").classList.toggle("hidden");
 });
@@ -48,15 +65,12 @@ document.getElementById("email-login-btn").addEventListener("click", () => {
 document.getElementById("submit-email-login").addEventListener("click", () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  auth.signInWithEmailAndPassword(email, password)
+  signInWithEmailAndPassword(auth, email, password)
     .then((result) => {
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("main-screen").classList.remove("hidden");
-      document.getElementById("motivation").classList.remove("hidden");
-      displayQuote();
+      showMainScreen();
     })
     .catch((error) => {
-      console.error("Erreur de connexion:", error);
+      console.error("Erreur de connexion Email:", error);
       alert("Erreur de connexion: " + error.message);
     });
 });
@@ -64,18 +78,21 @@ document.getElementById("submit-email-login").addEventListener("click", () => {
 document.getElementById("submit-email-signup").addEventListener("click", () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  auth.createUserWithEmailAndPassword(email, password)
+  createUserWithEmailAndPassword(auth, email, password)
     .then((result) => {
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("main-screen").classList.remove("hidden");
-      document.getElementById("motivation").classList.remove("hidden");
-      displayQuote();
+      showMainScreen();
     })
     .catch((error) => {
       console.error("Erreur d’inscription:", error);
       alert("Erreur d’inscription: " + error.message);
     });
 });
+
+function showMainScreen() {
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("main-screen").classList.remove("hidden");
+  updateProgress();
+}
 
 // Gestion des séries
 const series = ["L1", "L2", "STEG"];
@@ -94,7 +111,7 @@ document.querySelectorAll(".series-btn").forEach((btn) => {
     subjects.forEach((subject) => {
       const btn = document.createElement("button");
       btn.textContent = subject;
-      btn.className = "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600";
+      btn.className = "subject-btn bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300";
       btn.addEventListener("click", () => displayContent(subject));
       subjectList.appendChild(btn);
     });
@@ -102,18 +119,20 @@ document.querySelectorAll(".series-btn").forEach((btn) => {
   });
 });
 
-// Afficher le contenu (Leçons, Exercices, etc.)
+// Afficher le contenu
 function displayContent(subject) {
   const contentList = document.getElementById("content-list");
   contentList.innerHTML = "";
-  const options = ["Leçons", "Exercices", "Devoirs", "Sujets du Bac"];
+  const options = ["Leçons", "Exercices", "Devoirs", "Sujets du Bac", "Notes"];
   options.forEach((option) => {
     const btn = document.createElement("button");
     btn.textContent = option;
-    btn.className = "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600";
+    btn.className = "content-btn bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300";
     btn.addEventListener("click", () => {
       if (option === "Leçons") {
         displayLessons(subject);
+      } else if (option === "Notes") {
+        displayNotes();
       }
     });
     contentList.appendChild(btn);
@@ -127,13 +146,13 @@ function displayLessons(subject) {
   const contentList = document.getElementById("content-list");
   contentList.innerHTML = "";
   lessons.forEach((lesson, index) => {
-    const isFree = index < lessons.length / 2; // 50% gratuit
+    const isFree = index < lessons.length / 2;
     const btn = document.createElement("button");
     btn.textContent = lesson.title + (isFree ? "" : " (Payant)");
-    btn.className = "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600";
+    btn.className = "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300";
     btn.addEventListener("click", () => {
       if (!isFree) {
-        alert("Veuillez souscrire à l’offre premium (1000 FCFA tous les 6 mois).");
+        alert("Abonnement requis : 1000 FCFA tous les 6 mois. [Espace réservé pour Google Play Billing]");
         return;
       }
       displayLessonContent(lesson);
@@ -148,22 +167,21 @@ function displayLessonContent(lesson) {
   const lessonContent = document.getElementById("lesson-content");
   lessonContent.innerHTML = `
     <h3 class="text-xl font-bold text-blue-600">${lesson.title}</h3>
-    <h4>Leçon complète</h4>
-    <p>${lesson.fullContent}</p>
-    <h4>Résumé</h4>
-    <p>${lesson.summary}</p>
+    <div class="definition"><h4>Définition</h4><p>${lesson.definition}</p></div>
+    <div class="formula"><h4>Formule</h4><p>${lesson.formula}</p></div>
+    <div class="example"><h4>Exemple</h4><p>${lesson.example}</p></div>
     <h4>Exercices</h4>
     <ul>${lesson.exercises.map((ex) => `
       <li>
         ${ex.question}
         <div>
-          <button class="show-correction bg-gray-500 text-white px-2 py-1 rounded text-sm">Correction</button>
-          <button class="show-explanation bg-gray-500 text-white px-2 py-1 rounded text-sm">Explication</button>
+          <button class="show-correction bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">Correction</button>
+          <button class="show-explanation bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">Explication</button>
           <div class="correction hidden">${ex.correction}</div>
           <div class="explanation hidden">${ex.explanation}</div>
         </div>
       </li>`).join("")}</ul>
-    <p class="mt-4 italic text-blue-600">${lesson.quote}</p>
+    <div class="quote mt-4">${lesson.quote}</div>
     <div class="mt-4">
       <h4>Niveau de compréhension</h4>
       <select id="understanding" class="p-2 border rounded">
@@ -173,23 +191,54 @@ function displayLessonContent(lesson) {
         <option value="4">4 étoiles</option>
         <option value="5">5 étoiles</option>
       </select>
-      <button id="submit-understanding" class="bg-green-500 text-white px-4 py-2 rounded ml-2">Envoyer</button>
+      <button id="submit-understanding" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Envoyer</button>
     </div>
   `;
   document.getElementById("lesson").classList.remove("hidden");
-
-  // Gestion des boutons Correction/Explication
-  document.querySelectorAll(".show-correction").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      btn.nextElementSibling.classList.toggle("hidden");
-    });
-  });
-  document.querySelectorAll(".show-explanation").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      btn.nextElementSibling.classList.toggle("hidden");
-    });
+  document.getElementById("submit-understanding").addEventListener("click", () => {
+    const rating = document.getElementById("understanding").value;
+    localStorage.setItem(`rating_${lesson.title}`, rating);
+    updateProgress();
   });
 }
 
-// Afficher une citation quotidiennement
-setInterval(displayQuote, 24 * 60 * 60 * 1000); // Toutes les 24h
+// Gestion des notes
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+document.getElementById("save-note").addEventListener("click", () => {
+  const title = document.getElementById("note-title").value;
+  const content = document.getElementById("note-content").value;
+  if (title && content) {
+    notes.push({ title, content });
+    localStorage.setItem("notes", JSON.stringify(notes));
+    displayNotes();
+  }
+});
+
+function displayNotes() {
+  document.getElementById("subjects").classList.add("hidden");
+  document.getElementById("content").classList.add("hidden");
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("notes").classList.remove("hidden");
+  const noteList = document.getElementById("note-list");
+  noteList.innerHTML = "";
+  notes.forEach((note) => {
+    const div = document.createElement("div");
+    div.className = "bg-gray-100 p-4 rounded-lg mb-2";
+    div.innerHTML = `<h3 class="font-bold">${note.title}</h3><p>${note.content}</p>`;
+    noteList.appendChild(div);
+  });
+}
+
+// Calculer la progression
+function updateProgress() {
+  const ratings = Object.keys(localStorage).filter(key => key.startsWith("rating_")).map(key => parseInt(localStorage.getItem(key)));
+  const totalLessons = 5 + 5 + 19 + 4; // Exemple : Maths (5), Français (5), Histoire (19), Physique (4)
+  const progress = ratings.length ? (ratings.length / totalLessons) * 100 : 0;
+  document.getElementById("progress").textContent = `${Math.round(progress)}%`;
+}
+
+// Bloquer les captures d’écran (partiel, via événement)
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("keydown", (e) => {
+  if (e.key === "PrintScreen") e.preventDefault();
+});
