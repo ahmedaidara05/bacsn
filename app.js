@@ -1,20 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-// Configuration Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAu2DHDUT2hBz1NfbLWlBkoPTUR5FAmy-U",
-  authDomain: "bacappsenegal.firebaseapp.com",
-  projectId: "bacappsenegal",
-  storageBucket: "bacappsenegal.firebasestorage.app",
-  messagingSenderId: "509086558590",
-  appId: "1:509086558590:web:cd492dc7d33e7f802bab2f",
-  measurementId: "G-Q118M9E2ME"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
 // Notifications quotidiennes (365 messages)
 const notifications = [
   "Aujourd’hui, tu vas conquérir une nouvelle leçon !",
@@ -62,59 +45,8 @@ document.getElementById("start-btn").addEventListener("click", () => {
 });
 
 document.getElementById("login-btn").addEventListener("click", () => {
-  document.getElementById("home-screen").classList.add("hidden");
-  document.getElementById("login-screen").classList.remove("hidden");
+  alert("Connexion facultative. Continuez sans compte ou contactez l’admin pour activer Firebase.");
 });
-
-// Authentification
-document.getElementById("google-login-btn").addEventListener("click", () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      showMainScreen();
-    })
-    .catch((error) => {
-      console.error("Erreur de connexion Google:", error);
-      alert("Erreur de connexion: " + error.message);
-    });
-});
-
-document.getElementById("email-login-btn").addEventListener("click", () => {
-  document.getElementById("email-login-form").classList.toggle("hidden");
-});
-
-document.getElementById("submit-email-login").addEventListener("click", () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  signInWithEmailAndPassword(auth, email, password)
-    .then((result) => {
-      showMainScreen();
-    })
-    .catch((error) => {
-      console.error("Erreur de connexion Email:", error);
-      alert("Erreur de connexion: " + error.message);
-    });
-});
-
-document.getElementById("submit-email-signup").addEventListener("click", () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((result) => {
-      showMainScreen();
-    })
-    .catch((error) => {
-      console.error("Erreur d’inscription:", error);
-      alert("Erreur d’inscription: " + error.message);
-    });
-});
-
-function showMainScreen() {
-  document.getElementById("home-screen").classList.add("hidden");
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("main-screen").classList.remove("hidden");
-  updateProgress();
-}
 
 // Gestion des séries
 const series = ["L1", "L2", "STEG"];
@@ -133,11 +65,14 @@ document.querySelectorAll(".series-btn").forEach((btn) => {
     subjects.forEach((subject) => {
       const btn = document.createElement("button");
       btn.textContent = subject;
-      btn.className = "subject-btn bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300";
+      btn.className = "subject-btn bg-green-500 text-white p-4 rounded-xl hover:bg-green-600 transform hover:scale-105 transition duration-300 shadow-md";
       btn.addEventListener("click", () => displayContent(subject));
       subjectList.appendChild(btn);
     });
     document.getElementById("subjects").classList.remove("hidden");
+    document.getElementById("content").classList.add("hidden");
+    document.getElementById("lesson").classList.add("hidden");
+    document.getElementById("notes").classList.add("hidden");
   });
 });
 
@@ -149,7 +84,7 @@ function displayContent(subject) {
   options.forEach((option) => {
     const btn = document.createElement("button");
     btn.textContent = option;
-    btn.className = "content-btn bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300";
+    btn.className = "content-btn bg-blue-500 text-white p-4 rounded-xl hover:bg-blue-600 transform hover:scale-105 transition duration-300 shadow-md";
     btn.addEventListener("click", () => {
       if (option === "Leçons") {
         displayLessons(subject);
@@ -160,18 +95,25 @@ function displayContent(subject) {
     contentList.appendChild(btn);
   });
   document.getElementById("content").classList.remove("hidden");
+  document.getElementById("lesson").classList.add("hidden");
+  document.getElementById("notes").classList.add("hidden");
 }
 
 // Afficher les leçons
 function displayLessons(subject) {
-  const lessons = window[subject.toLowerCase().replace(" ", "") + "Lessons"] || [];
+  const lessons = window[subject.toLowerCase().replace(/[^a-zA-Z0-9]/g, "") + "Lessons"] || [];
   const contentList = document.getElementById("content-list");
   contentList.innerHTML = "";
   lessons.forEach((lesson, index) => {
     const isFree = index < lessons.length / 2;
     const btn = document.createElement("button");
-    btn.textContent = lesson.title + (isFree ? "" : " (Payant)");
-    btn.className = "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300";
+    btn.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span>${lesson.title}</span>
+        ${isFree ? '' : '<span class="text-yellow-400">★ Payant</span>'}
+      </div>
+    `;
+    btn.className = "bg-white text-left p-4 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300";
     btn.addEventListener("click", () => {
       if (!isFree) {
         window.open("https://www.bac.sn", "_blank");
@@ -182,41 +124,43 @@ function displayLessons(subject) {
     contentList.appendChild(btn);
   });
   document.getElementById("content").classList.remove("hidden");
+  document.getElementById("lesson").classList.add("hidden");
 }
 
 // Afficher le contenu d’une leçon
 function displayLessonContent(lesson) {
   const lessonContent = document.getElementById("lesson-content");
   lessonContent.innerHTML = `
-    <h3 class="text-xl font-bold text-blue-600">${lesson.title}</h3>
+    <h3 class="text-xl font-bold text-blue-600 mb-4">${lesson.title}</h3>
     <div class="definition"><h4>Définition</h4><p>${lesson.definition}</p></div>
     <div class="formula"><h4>Formule</h4><p>${lesson.formula}</p></div>
     <div class="example"><h4>Exemple</h4><p>${lesson.example}</p></div>
-    <h4>Exercices</h4>
-    <ul>${lesson.exercises.map((ex) => `
-      <li>
-        ${ex.question}
-        <div>
-          <button class="show-correction bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">Correction</button>
-          <button class="show-explanation bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">Explication</button>
-          <div class="correction hidden">${ex.correction}</div>
-          <div class="explanation hidden">${ex.explanation}</div>
+    <h4 class="text-lg font-bold text-blue-600 mt-4">Exercices</h4>
+    <ul class="space-y-4">${lesson.exercises.map((ex) => `
+      <li class="bg-gray-100 p-4 rounded-xl">
+        <p>${ex.question}</p>
+        <div class="mt-2">
+          <button class="show-correction bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Correction</button>
+          <button class="show-explanation bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Explication</button>
+          <div class="correction hidden mt-2 text-green-600">${ex.correction}</div>
+          <div class="explanation hidden mt-2 text-blue-600">${ex.explanation}</div>
         </div>
       </li>`).join("")}</ul>
-    <div class="quote mt-4">${lesson.quote}</div>
-    <div class="mt-4">
-      <h4>Niveau de compréhension</h4>
-      <select id="understanding" class="p-2 border rounded">
+    <div class="quote mt-6">${lesson.quote}</div>
+    <div class="mt-6">
+      <h4 class="text-lg font-bold text-blue-600">Niveau de compréhension</h4>
+      <select id="understanding" class="p-3 border border-gray-300 rounded-lg w-full mt-2">
         <option value="1">1 étoile</option>
         <option value="2">2 étoiles</option>
         <option value="3">3 étoiles</option>
         <option value="4">4 étoiles</option>
         <option value="5">5 étoiles</option>
       </select>
-      <button id="submit-understanding" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Envoyer</button>
+      <button id="submit-understanding" class="bg-green-500 text-white p-3 rounded-lg mt-3 hover:bg-green-600 transform hover:scale-105 transition duration-300">Envoyer</button>
     </div>
   `;
   document.getElementById("lesson").classList.remove("hidden");
+  document.getElementById("content").classList.add("hidden");
   document.getElementById("submit-understanding").addEventListener("click", () => {
     const rating = document.getElementById("understanding").value;
     localStorage.setItem(`rating_${lesson.title}`, rating);
@@ -243,6 +187,8 @@ document.getElementById("save-note").addEventListener("click", () => {
     notes.push({ title, content });
     localStorage.setItem("notes", JSON.stringify(notes));
     displayNotes();
+  } else {
+    alert("Veuillez remplir le titre et le contenu.");
   }
 });
 
@@ -255,8 +201,8 @@ function displayNotes() {
   noteList.innerHTML = "";
   notes.forEach((note) => {
     const div = document.createElement("div");
-    div.className = "bg-gray-100 p-4 rounded-lg mb-2";
-    div.innerHTML = `<h3 class="font-bold">${note.title}</h3><p>${note.content}</p>`;
+    div.className = "bg-white p-4 rounded-xl shadow-md mb-4";
+    div.innerHTML = `<h3 class="font-bold text-blue-600">${note.title}</h3><p class="text-gray-600">${note.content}</p>`;
     noteList.appendChild(div);
   });
 }
