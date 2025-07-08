@@ -202,3 +202,450 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçons</title>
+    <style>
+        :root {
+            --primary-color: #58CC02;
+            --secondary-color: #1CB0F6;
+            --dark-color: #3C3C3C;
+            --light-color: #FFFFFF;
+            --border-color: #E5E5E5;
+            --unread-color: #FF4B4B;
+            --text-muted: #9E9E9E;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: #FAFAFA;
+            color: var(--dark-color);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--light-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .header-title {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--dark-color);
+        }
+        
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .search-icon, .menu-icon {
+            font-size: 20px;
+            color: var(--dark-color);
+            cursor: pointer;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: var(--light-color);
+            padding: 15px 20px 0 20px;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            position: sticky;
+            top: 62px;
+            z-index: 9;
+        }
+        
+        .tab {
+            padding: 8px 0;
+            margin-right: 25px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .tab.unread::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            right: -10px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--unread-color);
+            border-radius: 50%;
+        }
+        
+        .content-container {
+            padding: 20px;
+        }
+        
+        .lesson-card {
+            background-color: var(--light-color);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lesson-info {
+            flex: 1;
+        }
+        
+        .lesson-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .lesson-meta {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        .lesson-status {
+            margin-right: 10px;
+        }
+        
+        .lesson-emoji {
+            font-size: 14px;
+        }
+        
+        .lesson-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        
+        .star-icon {
+            color: var(--secondary-color);
+            font-size: 16px;
+            margin-left: 5px;
+        }
+        
+        .add-note-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(88, 204, 2, 0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .add-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(88, 204, 2, 0.4);
+        }
+        
+        .add-note-btn::before {
+            content: "+";
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Animation pour les nouveaux éléments */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="profile-icon">P</div>
+        <div class="header-title">Leçons</div>
+        <div class="header-icons">
+            <span class="search-icon">🔍</span>
+            <span class="menu-icon">⋮</span>
+        </div>
+    </div>
+    
+    <div class="tabs">
+        <div class="tab active" data-tab="lesson">Leçon</div>
+        <div class="tab unread" data-tab="bac">Sujet du bac</div>
+        <div class="tab" data-tab="note">Note</div>
+        <div class="tab" data-tab="summary">Résumé</div>
+    </div>
+    
+    <!-- Contenu pour l'onglet Leçon -->
+    <div class="content-container tab-content" id="lessonTab">
+        <div id="lessonList">
+            <!-- Les leçons seront générées par JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Contenu pour l'onglet Sujet du bac -->
+    <div class="content-container tab-content hidden" id="bacTab">
+        <div id="bacList">
+            <!-- Les sujets de bac seront générés par JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Contenu pour l'onglet Note -->
+    <div class="content-container tab-content hidden" id="noteTab">
+        <button class="add-note-btn" id="addNoteBtn">Ajouter une note</button>
+        <div id="noteList">
+            <!-- Les notes seront ajoutées dynamiquement -->
+        </div>
+    </div>
+    
+    <!-- Contenu pour l'onglet Résumé -->
+    <div class="content-container tab-content hidden" id="summaryTab">
+        <div id="summaryList">
+            <!-- Les résumés seront générés par JavaScript -->
+        </div>
+    </div>
+    
+    <script>
+        // Données des leçons
+        const lessons = [
+            { title: "Suite numérique", status: "Nouveau", time: "2 sem.", emoji: "😊", number: 1, starred: true },
+            { title: "Polynômes", status: "Nouveau", time: "2 sem.", emoji: "😊", number: 2, starred: true },
+            { title: "Fonctions exponentielles", status: "En cours", time: "1 sem.", emoji: "📚", number: 3, starred: false },
+            { title: "Limites de fonctions", status: "Nouveau", time: "2 h", number: 4, starred: false },
+            { title: "Dérivation", status: "À réviser", time: "1 mois", emoji: "🧠", number: 5, starred: true },
+            { title: "Intégrales", status: "Terminé", time: "3 j", emoji: "✅", number: 6, starred: false },
+            { title: "Probabilités", status: "Nouveau", time: "5 j", emoji: "🎲", number: 7, starred: false },
+            { title: "Statistiques", status: "Terminé", time: "1 j", number: 8, starred: false },
+            { title: "Géométrie plane", status: "En cours", time: "3 sem.", emoji: "📐", number: 9, starred: false },
+            { title: "Trigonométrie", status: "À réviser", time: "4 j", number: 10, starred: false },
+            { title: "Nombres complexes", status: "Nouveau", time: "5 sem.", emoji: "🔢", number: 11, starred: false },
+            { title: "Suites récurrentes", status: "Terminé", time: "2 j", number: 12, starred: false },
+            { title: "Logarithmes", status: "En cours", time: "6 sem.", emoji: "📈", number: 13, starred: false },
+            { title: "Équations différentielles", status: "Nouveau", time: "1 j", number: 14, starred: false },
+            { title: "Algèbre linéaire", status: "Terminé", time: "3 j", number: 15, starred: false }
+        ];
+        
+        // Données des sujets de bac
+        const bacSubjects = [
+            { title: "BAC 2023", status: "Nouveau", time: "1 mois", number: 1 },
+            { title: "BAC 2022", status: "Vu", time: "2 sem.", number: 2 },
+            { title: "BAC 2021", status: "Vu", time: "1 mois", number: 3 },
+            { title: "BAC 2020", status: "Vu", time: "2 mois", number: 4 },
+            { title: "BAC 2019", status: "Vu", time: "3 mois", number: 5 },
+            { title: "BAC 2018", status: "Vu", time: "6 mois", number: 6 },
+            { title: "BAC 2017", status: "Vu", time: "1 an", number: 7 }
+        ];
+        
+        // Données des résumés
+        const summaries = [
+            { title: "Résumé général", status: "Nouveau", time: "1 sem.", number: 1 },
+            { title: "Résumé des polynômes", status: "Vu", time: "2 j", number: 2 },
+            { title: "Résumé des nombres relatifs", status: "Vu", time: "3 j", number: 3 },
+            { title: "Résumé des fonctions", status: "Nouveau", time: "1 j", number: 4 },
+            { title: "Résumé des limites", status: "Vu", time: "1 sem.", number: 5 }
+        ];
+        
+        // Fonction pour créer une carte
+        function createCard(item, containerId, isNote = false) {
+            const container = document.getElementById(containerId);
+            const card = document.createElement('div');
+            card.className = `lesson-card ${isNote ? 'fade-in' : ''}`;
+            
+            card.innerHTML = `
+                <div class="lesson-info">
+                    <div class="lesson-title">
+                        ${item.title}
+                        ${item.starred ? '<span class="star-icon">★</span>' : ''}
+                    </div>
+                    <div class="lesson-meta">
+                        <span class="lesson-status">${item.status} · ${item.time}</span>
+                        ${item.emoji ? '<span class="lesson-emoji">'+item.emoji+'</span>' : ''}
+                    </div>
+                </div>
+                <div class="lesson-number">${item.number}</div>
+            `;
+            
+            container.appendChild(card);
+            return card;
+        }
+        
+        // Initialiser les listes
+        function initLists() {
+            // Leçons
+            const lessonList = document.getElementById('lessonList');
+            lessons.forEach(lesson => {
+                createCard(lesson, 'lessonList');
+            });
+            
+            // Sujets de bac
+            bacSubjects.forEach(bac => {
+                createCard(bac, 'bacList');
+            });
+            
+            // Résumés
+            summaries.forEach(summary => {
+                createCard(summary, 'summaryList');
+            });
+        }
+        
+        // Gestion des onglets
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Retirer la classe active de tous les onglets
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Ajouter la classe active à l'onglet cliqué
+                    tab.classList.add('active');
+                    
+                    // Cacher tous les contenus d'onglets
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Afficher le contenu correspondant
+                    const tabId = tab.getAttribute('data-tab') + 'Tab';
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+        }
+        
+        // Gestion des notes
+        function setupNotes() {
+            const addNoteBtn = document.getElementById('addNoteBtn');
+            const noteList = document.getElementById('noteList');
+            let noteCount = 0;
+            
+            addNoteBtn.addEventListener('click', () => {
+                noteCount++;
+                const newNote = {
+                    title: `Note personnelle ${noteCount}`,
+                    status: "Nouveau",
+                    time: "Maintenant",
+                    number: noteCount
+                };
+                
+                const card = createCard(newNote, 'noteList', true);
+                
+                // Ajouter une interaction pour modifier les notes
+                card.addEventListener('click', () => {
+                    const newTitle = prompt("Modifier le titre de la note:", newNote.title);
+                    if (newTitle) {
+                        card.querySelector('.lesson-title').textContent = newTitle;
+                    }
+                });
+            });
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            initLists();
+            setupTabs();
+            setupNotes();
+        });
+    </script>
+</body>
+</html>
