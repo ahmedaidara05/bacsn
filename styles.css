@@ -4,7 +4,7 @@ body {
   user-select: none; /* Bloquer le copier-coller */
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
+ -ms-user-select: none;
 }
 .no-copy {
   user-select: none; /* Bloquer le copier-coller pour le contenu des leçons */
@@ -18,18 +18,21 @@ body {
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .formula {
   background-color: #34d399; /* Vert pour les formules */
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .example {
   background-color: #f97316; /* Orange pour les exemples */
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .quote {
   background-color: #a855f7; /* Violet pour les citations */
@@ -37,6 +40,7 @@ body {
   border-radius: 0.5rem;
   color: white;
   font-style: italic;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .animate-pulse {
   animation: pulse 2s infinite;
@@ -56,4 +60,7 @@ body {
 #lesson-content {
   max-width: 800px;
   margin: 0 auto;
+}
+#notification {
+  max-width: 300px;
 }
