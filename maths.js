@@ -50,7 +50,12 @@ const mathsLessons = [
         correction: "x² + C",
         explanation: "La primitive de 2x est x², plus une constante C."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Calculez ∫cos(x) dx.",
+        correction: "sin(x) + C",
+        explanation: "La primitive de cos(x) est sin(x)."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Intègre avec confiance, et tu réussiras !"
   },
@@ -65,7 +70,12 @@ const mathsLessons = [
         correction: "y = Ce^(3x)",
         explanation: "C’est une équation différentielle à variables séparables."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Résolvez y' = -y.",
+        correction: "y = Ce^(-x)",
+        explanation: "La solution générale est une exponentielle décroissante."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Les équations sont des défis à relever !"
   },
@@ -80,13 +90,17 @@ const mathsLessons = [
         correction: "P(as) = 4/52 = 1/13",
         explanation: "Il y a 4 as dans un jeu de 52 cartes."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Quelle est la probabilité d’obtenir un nombre pair en lançant un dé ?",
+        correction: "P(pair) = 3/6 = 1/2",
+        explanation: "Les nombres pairs sont 2, 4, 6, soit 3 cas sur 6."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Les probabilités, c’est jouer avec le futur !"
   }
 ];
 
-// Exemple pour Français (5 leçons)
 const françaisLessons = [
   {
     title: "Leçon 1 : La dissertation",
@@ -99,34 +113,72 @@ const françaisLessons = [
         correction: "Introduction : La liberté, valeur fondamentale, soulève des débats complexes... (exemple complet).",
         explanation: "L’introduction doit poser le sujet, la problématique et le plan."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Proposez un plan pour une dissertation sur l’éducation.",
+        correction: "Plan : I. Importance de l’éducation, II. Limites du système éducatif, III. Perspectives d’amélioration.",
+        explanation: "Un plan équilibré couvre plusieurs aspects du sujet."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Écris avec passion, et ta dissertation brillera !"
   },
-  // Ajoute 4 autres leçons
+  {
+    title: "Leçon 2 : Le commentaire composé",
+    definition: "Le commentaire composé analyse un texte littéraire en étudiant sa structure, son style et ses thèmes.",
+    formula: "Structure : Intro, 2-3 axes d’analyse, Conclusion",
+    example: "Exemple : Analyse d’un poème de Baudelaire en étudiant l’imagery et les sonorités.",
+    exercises: [
+      {
+        question: "Identifiez deux figures de style dans un extrait donné.",
+        correction: "Métaphore et allitération (exemple spécifique).",
+        explanation: "Les figures de style enrichissent le texte."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Chaque texte est une porte vers la compréhension !"
+  },
+  // Ajoute 3 autres leçons
 ];
 
-// Exemple pour Sport (4 leçons)
 const sportLessons = [
   {
     title: "Leçon 1 : Lancer de poids",
     definition: "Le lancer de poids est une épreuve d’athlétisme où l’athlète projette un poids métallique le plus loin possible.",
     formula: "Technique : Position de départ, rotation, poussée.",
-    example: "<video src='https://example.com/lancer-de-poids.mp4' controls class='w-full'></video><img src='https://example.com/lancer-de-poids.jpg' alt='Lancer de poids' class='w-full mt-2'>",
+    example: "<img src='https://via.placeholder.com/300x150.png?text=Lancer+de+Poids' alt='Lancer de poids' class='w-full rounded-lg'>",
     exercises: [
       {
         question: "Décrivez la position de départ pour le lancer de poids.",
         correction: "Pieds écartés, poids tenu près du cou, corps incliné.",
         explanation: "La position initiale maximise la puissance de la poussée."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Quels muscles sont principalement sollicités dans le lancer de poids ?",
+        correction: "Épaules, pectoraux, jambes.",
+        explanation: "Ces muscles fournissent la force nécessaire."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Lance fort, aime tendrement !"
   },
-  // Ajoute 3 autres leçons
+  {
+    title: "Leçon 2 : Gymnastique",
+    definition: "La gymnastique est un sport combinant force, souplesse et coordination.",
+    formula: "Éléments : Équilibre, sauts, rotations.",
+    example: "<img src='https://via.placeholder.com/300x150.png?text=Gymnastique' alt='Gymnastique' class='w-full rounded-lg'>",
+    exercises: [
+      {
+        question: "Quels sont les bénéfices de la gymnastique ?",
+        correction: "Amélioration de la souplesse, force, coordination.",
+        explanation: "La gymnastique développe le corps harmonieusement."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Chaque mouvement est une victoire !"
+  },
+  // Ajoute 2 autres leçons
 ];
 
-// Exemple pour Dessin (4 leçons)
 const dessinLessons = [
   {
     title: "Leçon 1 : Techniques de croquis",
@@ -139,14 +191,33 @@ const dessinLessons = [
         correction: "Utilisez des cercles pour la tête et des lignes pour les traits.",
         explanation: "Un croquis efficace repose sur des proportions correctes."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Quels sont les avantages d’un croquis rapide ?",
+        correction: "Capture rapide des idées, amélioration de l’observation.",
+        explanation: "Le croquis développe la spontanéité."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Chaque trait est une étape vers la perfection !"
   },
-  // Ajoute 3 autres leçons
+  {
+    title: "Leçon 2 : Sujets du bac",
+    definition: "Les sujets du bac en dessin testent la créativité et la technique.",
+    formula: "Conseils : Planifiez votre composition, utilisez des contrastes.",
+    example: "Exemple de sujet : Représentez un paysage urbain en perspective.",
+    exercises: [
+      {
+        question: "Proposez une esquisse pour un sujet sur la nature.",
+        correction: "Utilisez des lignes courbes et des ombres douces.",
+        explanation: "La nature demande des formes organiques."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Ton crayon raconte ton histoire !"
+  },
+  // Ajoute 2 autres leçons
 ];
 
-// Exemple pour Histoire (19 leçons, 1 exemple)
 const histoireLessons = [
   {
     title: "Leçon 1 : La colonisation en Afrique",
@@ -159,14 +230,18 @@ const histoireLessons = [
         correction: "Impacts : Administration coloniale, économie d’exploitation, changements culturels.",
         explanation: "La colonisation a restructuré les sociétés locales."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Nommez deux figures de la résistance sénégalaise.",
+        correction: "Lat Dior, Alboury Ndiaye.",
+        explanation: "Ces figures ont lutté contre la domination coloniale."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Comprendre l’histoire, c’est préparer l’avenir !"
   },
   // Ajoute 18 autres leçons
 ];
 
-// Exemple pour Physique-Chimie (4 leçons, 1 exemple)
 const physiquechimieLessons = [
   {
     title: "Leçon 1 : Les lois de Newton",
@@ -179,9 +254,29 @@ const physiquechimieLessons = [
         correction: "F = 5 * 2 = 10 N",
         explanation: "Utilisez la formule F = ma."
       },
-      // Ajoute 99 autres exercices
+      {
+        question: "Quelle est la première loi de Newton ?",
+        correction: "Un objet au repos reste au repos, et un objet en mouvement reste en mouvement, sauf si une force agit sur lui.",
+        explanation: "C’est le principe d’inertie."
+      },
+      // Ajoute 98 autres exercices
     ],
     quote: "Les lois de Newton sont la clé du mouvement !"
   },
-  // Ajoute 3 autres leçons
+  {
+    title: "Leçon 2 : Les réactions chimiques",
+    definition: "Une réaction chimique transforme des réactifs en produits.",
+    formula: "Réactifs → Produits (ex. : 2H₂ + O₂ → 2H₂O)",
+    example: "La combustion du méthane : CH₄ + 2O₂ → CO₂ + 2H₂O.",
+    exercises: [
+      {
+        question: "Équilibrez l’équation : H₂ + O₂ → H₂O.",
+        correction: "2H₂ + O₂ → 2H₂O",
+        explanation: "Il faut équilibrer le nombre d’atomes de chaque côté."
+      },
+      // Ajoute 99 autres exercices
+    ],
+    quote: "Chaque réaction est une transformation magique !"
+  },
+  // Ajoute 2 autres leçons
 ];
