@@ -3,138 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dwolingo - Apprendre une langue</title>
+    <title>BAC SN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Page d'accueil -->
-    <div id="home" class="page">
-        <div class="container">
+    <div id="app">
+        <!-- Page 1: Accueil -->
+        <div id="page-home" class="page">
             <img src="lion.png" alt="Logo Lion" class="lion-logo">
             <div class="logo">BAC SN</div>
             <p class="slogan">Future candidat, bienvenue !</p>
-            <button class="cta-button" onclick="showPage('greeting')">C'EST PARTI !</button>
+            <button class="cta-button" onclick="showPage('page-lion')">C'EST PARTI !</button>
         </div>
-    </div>
 
-    <!-- Page de salutation -->
-    <div id="greeting" class="page" style="display: none;">
-        <button class="back-button" onclick="showPage('home')">✕</button>
-        <div class="content">
-            <div class="speech-bubble">
-                <p class="greeting">Salut, moi c'est le lion !</p>
-            </div>
-            <img src="lion.png" alt="Le Lion" class="lion-avatar">
-        </div>
-        <button class="continue-button" onclick="showPage('name')">ENCHANTÉ</button>
-    </div>
-
-    <!-- Page pour le nom -->
-    <div id="name" class="page" style="display: none;">
-        <button class="back-button" onclick="showPage('greeting')">✕</button>
-        <div class="progress-container">
-            <div class="progress-bar" style="width: 20%;"></div>
-        </div>
-        <div class="content">
-            <h1 class="question">Comment t'appelles-tu ?</h1>
-            <div class="form-group">
-                <label for="firstname">Prénom</label>
-                <input type="text" id="firstname" placeholder="Ton prénom">
-            </div>
-            <div class="form-group">
-                <label for="lastname">Nom de famille</label>
-                <input type="text" id="lastname" placeholder="Ton nom de famille">
-            </div>
-            <div class="divider"></div>
-            <button class="continue-button" onclick="saveName()">CONTINUER</button>
-            <p class="legal-text">
-                En te connectant, tu acceptes nos <strong>Conditions d'utilisation</strong> et notre <strong>Politique de confidentialité</strong>.
-            </p>
-        </div>
-    </div>
-
-    <!-- Page pour l'âge -->
-    <div id="age" class="page" style="display: none;">
-        <button class="back-button" onclick="showPage('name')">✕</button>
-        <div class="progress-container">
-            <div class="progress-bar" style="width: 40%;"></div>
-        </div>
-        <div class="content">
-            <h1 class="question">Quel âge as-tu ?</h1>
-            <div class="form-group">
-                <label for="age">Âge</label>
-                <input type="number" id="age" placeholder="Ton âge" min="1" max="120">
-            </div>
-            <div class="divider"></div>
-            <button class="continue-button" id="age-continue" disabled>CONTINUER</button>
-            <p class="legal-text">
-                En te connectant à Dwolingo, tu acceptes nos <strong>Conditions d'utilisation</strong> et notre <strong>Politique de confidentialité</strong>.
-            </p>
-        </div>
-    </div>
-
-    <!-- Page pour le niveau d'études -->
-    <div id="level" class="page" style="display: none;">
-        <button class="back-button" onclick="showPage('age')">✕</button>
-        <div class="progress-container">
-            <div class="progress-bar" style="width: 60%;"></div>
-        </div>
-        <div class="content">
-            <div class="speech-container">
-                <div class="speech-bubble level">
-                    <p class="question">Quel est ton niveau d'études actuel ?</p>
+        <!-- Page 2: Présentation du lion -->
+        <div id="page-lion" class="page hidden">
+            <button class="back-button" onclick="showPage('page-home')">✕</button>
+            <div class="content">
+                <div class="speech-bubble">
+                    <p class="greeting">Salut, moi c'est le lion !</p>
                 </div>
-                <img src="lion.png" alt="Lion" class="lion-avatar">
+                <img src="lion.png" alt="le Lion" class="lion-avatar">
             </div>
-            <div class="options">
-                <label class="option">
-                    <input type="radio" name="math-level" value="terminal">
-                    <span class="option-label">TERMINAL</span>
-                </label>
-                <label class="option">
-                    <input type="radio" name="math-level" value="premiere">
-                    <span class="option-label">PREMIÈRE</span>
-                </label>
-                <label class="option">
-                    <input type="radio" name="math-level" value="seconde">
-                    <span class="option-label">SECONDE</span>
-                </label>
-            </div>
+            <button class="continue-button" onclick="showPage('page-name')">ENCHANTÉ</button>
         </div>
-        <button class="continue-button" id="level-continue" disabled>CONTINUER</button>
-    </div>
 
-    <!-- Page de chargement -->
-    <div id="loading" class="page" style="display: none;">
-        <div class="loading-container">
-            <img src="lion.png" alt="Lion Duo" class="lion-loading">
-            <div class="loading-text">CHARGEMENT EN COURS...</div>
-            <div class="mission-text">
-                Notre mission, c'est de<br>
-                concevoir le meilleur<br>
-                enseignement possible et que<br>
-                tous les candidats puissent<br>
-                avoir la mention excellent !
-            </div>
+        <!-- Page 3: Nom et prénom -->
+        <div id="page-name" class="page hidden">
+            <button class="back-button" onclick="showPage('page-lion')">✕</button>
             <div class="progress-container">
-                <div class="progress-bar"></div>
+                <div class="progress-bar" style="width: 20%;"></div>
+            </div>
+            <div class="content">
+                <h1 class="question">Comment t'appelles-tu ?</h1>
+                <div class="form-group">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" id="firstname" placeholder="Ton prénom">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Nom de famille</label>
+                    <input type="text" id="lastname" placeholder="Ton nom de famille">
+                </div>
+                <div class="divider"></div>
+                <button class="continue-btn" id="name-continue-btn" disabled>CONTINUER</button>
+                <p class="legal-text">
+                    En te connectant, tu acceptes nos <strong>Conditions d'utilisation</strong> et notre <strong>Politique de confidentialité</strong>.
+                </p>
             </div>
         </div>
-    </div>
 
-    <!-- Page de bienvenue -->
-    <div id="welcome" class="page" style="display: none;">
-        <button class="back-button" onclick="showPage('level')">✕</button>
-        <div class="container">
+        <!-- Page 4: Âge -->
+        <div id="page-age" class="page hidden">
+            <button class="back-button" onclick="showPage('page-name')">✕</button>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 40%;"></div>
+            </div>
+            <div class="content">
+                <h1 class="question">Quel âge as-tu ?</h1>
+                <div class="form-group">
+                    <label for="age">Âge</label>
+                    <input type="number" id="age" placeholder="Ton âge" min="1" max="120">
+                </div>
+                <div class="divider"></div>
+                <button class="continue-btn" id="age-continue-btn" disabled>CONTINUER</button>
+                <p class="legal-text">
+                    En te connectant à BAC SN, tu acceptes nos <strong>Conditions d'utilisation</strong> et notre <strong>Politique de confidentialité</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Page 5: Niveau d'études -->
+        <div id="page-level" class="page hidden">
+            <button class="back-button" onclick="showPage('page-age')">✕</button>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 60%;"></div>
+            </div>
+            <div class="content">
+                <div class="speech-container">
+                    <div class="speech-bubble">
+                        <p class="question">Quel est ton niveau d'études actuel ?</p>
+                    </div>
+                    <img src="lion.png" alt="Lion" class="lion-avatar">
+                </div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="level" value="Terminal">
+                        <span class="option-label">TERMINAL</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="level" value="Première">
+                        <span class="option-label">PREMIÈRE</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="level" value="Seconde">
+                        <span class="option-label">SECONDE</span>
+                    </label>
+                </div>
+                <button class="continue-btn" id="level-continue-btn" disabled>CONTINUER</button>
+            </div>
+        </div>
+
+        <!-- Page 6: Chargement -->
+        <div id="page-loading" class="page hidden">
+            <div class="loading-container">
+                <img src="lion.png" alt="Lion Duo" class="lion-loading">
+                <div class="loading-text">CHARGEMENT EN COURS...</div>
+                <div class="mission-text">
+                    Notre mission, c'est de<br>
+                    concevoir le meilleur<br>
+                    enseignement possible et que<br>
+                    tous les candidats puissent<br>
+                    avoir la mention excellent !
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 7: Bienvenue -->
+        <div id="page-welcome" class="page hidden">
+            <button class="back-button" onclick="showPage('page-level')">✕</button>
             <img src="lion.png" alt="Lion Duo" class="lion-avatar">
             <div class="welcome-message">
                 Salut, <span class="user-name" id="user-name">Utilisateur</span> !<br>
                 Ça fait plaisir d'être parmi nous !
             </div>
-            <button class="start-button" onclick="window.location.href='lecons.html'">C'EST PARTI !</button>
+            <button class="start-button" onclick="showPage('page-main')">C'EST PARTI !</button>
+        </div>
+
+        <!-- Page principale (placeholder pour la suite) -->
+        <div id="page-main" class="page hidden">
+            <button class="back-button" onclick="showPage('page-welcome')">✕</button>
+            <div class="content">
+                <h1 class="question">Bienvenue sur BAC SN !</h1>
+                <p>Page principale (à développer).</p>
+            </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
