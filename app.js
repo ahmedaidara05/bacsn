@@ -19,13 +19,15 @@ const auth = getAuth(app);
 const notifications = [
   "Aujourd’hui, tu vas conquérir une nouvelle leçon !",
   "Chaque pas compte vers ton succès au bac !",
-  // Ajoute 363 autres messages ici
+  "Révise avec passion, et le bac sera à toi !",
+  // Ajoute 362 autres messages ici
 ];
 
 // Citations motivantes
 const quotes = [
   "Chaque effort te rapproche de ton objectif !",
   "Le bac, c’est juste une étape. Tu vas briller !",
+  "Apprends aujourd’hui, réussis demain !",
   // Ajoute d’autres citations
 ];
 
@@ -44,6 +46,25 @@ document.getElementById("close-notification").addEventListener("click", () => {
   document.getElementById("notification").classList.add("hidden");
 });
 setInterval(showDailyNotification, 60 * 1000); // Vérifie toutes les minutes
+
+// Page d'accueil
+document.getElementById("start-btn").addEventListener("click", () => {
+  const name = document.getElementById("name").value;
+  const surname = document.getElementById("surname").value;
+  const classe = document.getElementById("class").value;
+  const age = document.getElementById("age").value;
+  if (name && surname && classe && age) {
+    localStorage.setItem("userInfo", JSON.stringify({ name, surname, classe, age }));
+    showMainScreen();
+  } else {
+    alert("Veuillez remplir tous les champs.");
+  }
+});
+
+document.getElementById("login-btn").addEventListener("click", () => {
+  document.getElementById("home-screen").classList.add("hidden");
+  document.getElementById("login-screen").classList.remove("hidden");
+});
 
 // Authentification
 document.getElementById("google-login-btn").addEventListener("click", () => {
@@ -89,6 +110,7 @@ document.getElementById("submit-email-signup").addEventListener("click", () => {
 });
 
 function showMainScreen() {
+  document.getElementById("home-screen").classList.add("hidden");
   document.getElementById("login-screen").classList.add("hidden");
   document.getElementById("main-screen").classList.remove("hidden");
   updateProgress();
@@ -152,7 +174,7 @@ function displayLessons(subject) {
     btn.className = "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300";
     btn.addEventListener("click", () => {
       if (!isFree) {
-        alert("Abonnement requis : 1000 FCFA tous les 6 mois. [Espace réservé pour Google Play Billing]");
+        window.open("https://www.bac.sn", "_blank");
         return;
       }
       displayLessonContent(lesson);
@@ -200,6 +222,16 @@ function displayLessonContent(lesson) {
     localStorage.setItem(`rating_${lesson.title}`, rating);
     updateProgress();
   });
+  document.querySelectorAll(".show-correction").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.nextElementSibling.classList.toggle("hidden");
+    });
+  });
+  document.querySelectorAll(".show-explanation").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.nextElementSibling.classList.toggle("hidden");
+    });
+  });
 }
 
 // Gestion des notes
@@ -232,13 +264,15 @@ function displayNotes() {
 // Calculer la progression
 function updateProgress() {
   const ratings = Object.keys(localStorage).filter(key => key.startsWith("rating_")).map(key => parseInt(localStorage.getItem(key)));
-  const totalLessons = 5 + 5 + 19 + 4; // Exemple : Maths (5), Français (5), Histoire (19), Physique (4)
+  const totalLessons = 5 + 5 + 19 + 4 + 4 + 4; // Maths (5), Français (5), Histoire (19), Physique (4), Sport (4), Dessin (4)
   const progress = ratings.length ? (ratings.length / totalLessons) * 100 : 0;
   document.getElementById("progress").textContent = `${Math.round(progress)}%`;
 }
 
-// Bloquer les captures d’écran (partiel, via événement)
+// Bloquer les captures d’écran et le copier-coller
 document.addEventListener("contextmenu", (e) => e.preventDefault());
 document.addEventListener("keydown", (e) => {
-  if (e.key === "PrintScreen") e.preventDefault();
+  if (e.key === "PrintScreen" || (e.ctrlKey && e.key === "c")) {
+    e.preventDefault();
+  }
 });
