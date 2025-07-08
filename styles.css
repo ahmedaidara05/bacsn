@@ -1,54 +1,56 @@
-/* Styles modernes inspirés de Duolingo */
+/* Styles inspirés de Duolingo */
+@font-face {
+  font-family: 'Nunito';
+  src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+}
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Nunito', sans-serif;
+  background-color: #f9fafb;
   user-select: none; /* Bloquer le copier-coller */
   -webkit-user-select: none;
   -moz-user-select: none;
- -ms-user-select: none;
+  -ms-user-select: none;
 }
 .no-copy {
-  user-select: none; /* Bloquer le copier-coller pour le contenu des leçons */
+  user-select: none; /* Bloquer le copier-coller pour les leçons */
+}
+.series-btn, .subject-btn, .content-btn {
+  transition: transform 0.2s ease-in-out, background-color 0.3s;
 }
 .series-btn:hover, .subject-btn:hover, .content-btn:hover {
   transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
 }
 .definition {
-  background-color: #60a5fa; /* Bleu vif pour les définitions */
+  background-color: #1CB0F6; /* Bleu Duolingo pour définitions */
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 .formula {
-  background-color: #34d399; /* Vert pour les formules */
+  background-color: #58CC02; /* Vert Duolingo pour formules */
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 .example {
-  background-color: #f97316; /* Orange pour les exemples */
+  background-color: #FF9600; /* Orange pour exemples */
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 .quote {
-  background-color: #a855f7; /* Violet pour les citations */
+  background-color: #7B3FE4; /* Violet pour citations */
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   color: white;
   font-style: italic;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.animate-pulse {
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
 }
 .animate-bounce {
   animation: bounce 1s infinite;
@@ -58,9 +60,14 @@ body {
   50% { transform: translateY(-10px); }
 }
 #lesson-content {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 100%;
 }
 #notification {
-  max-width: 300px;
+  max-width: 250px;
+}
+input, select, textarea {
+  transition: border-color 0.3s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #1CB0F6;
 }
