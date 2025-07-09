@@ -1,63 +1,13 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Gestion de l'affichage des pages
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(page => {
-            page.style.display = 'none';
-        });
-        document.getElementById(pageId).style.display = 'flex';
-    }
+const quotes = [
+    { citation: "L'éducation est l'arme la plus puissante pour changer le monde.", auteur: "Nelson Mandela", explication: "Cette citation souligne l'importance de l'éducation comme outil de transformation sociale." },
+    { citation: "Le savoir est un trésor que l'on emporte partout avec soi.", auteur: "Proverbe chinois", explication: "Le savoir est une richesse intemporelle et universelle." },
+    { citation: "Ce n'est pas parce que c'est difficile qu'on n'ose pas, c'est parce qu'on n'ose pas que c'est difficile.", auteur: "Sénèque", explication: "Le courage est essentiel pour surmonter les défis." },
+    // ... (362 autres citations pour atteindre 365)
+    { citation: "Le succès est la somme de petits efforts répétés jour après jour.", auteur: "Robert Collier", explication: "La persévérance est la clé du succès à long terme." }
+];
 
-    // Sauvegarde du nom
-    function saveName() {
-        const firstName = document.getElementById('firstname').value.trim();
-        const lastName = document.getElementById('lastname').value.trim();
-        if (firstName && lastName) {
-            localStorage.setItem('userFullName', `${firstName} ${lastName}`);
-            showPage('age');
-        } else {
-            alert('Veuillez remplir tous les champs');
-        }
-    }
-
-    // Gestion du bouton Continuer pour l'âge
-    const ageInput = document.getElementById('age');
-    const ageContinueBtn = document.getElementById('age-continue');
-    if (ageInput && ageContinueBtn) {
-        ageInput.addEventListener('input', () => {
-            ageContinueBtn.disabled = !ageInput.value;
-        });
-        ageContinueBtn.addEventListener('click', () => {
-            const age = ageInput.value;
-            if (age) {
-                localStorage.setItem('userAge', age);
-                showPage('level');
-            }
-        });
-    }
-
-    // Gestion du bouton Continuer pour le niveau
-    const radioButtons = document.querySelectorAll('input[name="math-level"]');
-    const levelContinueBtn = document.getElementById('level-continue');
-    if (radioButtons && levelContinueBtn) {
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', () => {
-                levelContinueBtn.disabled = false;
-            });
-        });
-        levelContinueBtn.addEventListener('click', () => {
-            const selectedLevel = document.querySelector('input[name="math-level"]:checked').value;
-            localStorage.setItem('userLevel', selectedLevel);
-            showPage('loading');
-            // Lancer le chargement automatique
-            setTimeout(() => {
-                showPage('welcome');
-                // Afficher le nom de l'utilisateur
-                const userName = localStorage.getItem('userFullName') || 'Utilisateur';
-                document.getElementById('user-name').textContent = userName;
-            }, 10000); // 10 secondes
-        });
-    }
-
-    // Initialisation : afficher la page d'accueil
-    showPage('home');
-});
+function getDailyQuote() {
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    return quotes[dayOfYear % quotes.length];
+}
