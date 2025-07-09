@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BAC SN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Segoe+UI&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -133,15 +133,160 @@
             <button class="start-button" onclick="showPage('page-main')">C'EST PARTI !</button>
         </div>
 
-        <!-- Page principale (placeholder pour la suite) -->
+        <!-- Page 8: Page d'accueil principale -->
         <div id="page-main" class="page hidden">
-            <button class="back-button" onclick="showPage('page-welcome')">✕</button>
+            <div class="header">
+                <div class="logo-container">
+                    <img src="lion.png" alt="Logo" class="logo" onclick="showPage('page-main')">
+                </div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="contact-info" id="user-fullname">Utilisateur</div>
+            <div class="principal">
+                <div class="section-title">LE BAC AU SÉNÉGAL</div>
+                <div class="quote-container">
+                    <div class="quote-content">
+                        <div class="principal-amount" id="quote-text"></div>
+                        <div class="quote-author" id="quote-author"></div>
+                        <div class="quote-explanation" id="quote-explanation"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="menu-grid">
+                    <div class="menu-item" onclick="showPage('page-serie-s')">
+                        <img src="serie-s.png" alt="Série S" class="menu-icon">
+                        <span class="menu-text">Série S</span>
+                    </div>
+                    <div class="menu-item" onclick="showPage('page-serie-l')">
+                        <img src="serie-l.png" alt="Série L" class="menu-icon">
+                        <span class="menu-text">Série L</span>
+                    </div>
+                    <div class="menu-item" onclick="showPage('page-professeur')">
+                        <img src="professeur.png" alt="Je suis professeur" class="menu-icon">
+                        <span class="menu-text">JE SUIS PROFESSEUR</span>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="menu-grid">
+                    <div class="menu-item" onclick="showPage('page-moral')">
+                        <img src="moral.png" alt="Moral" class="menu-icon">
+                        <span class="menu-text">Moral</span>
+                    </div>
+                    <div class="menu-item" onclick="showPage('page-conseil')">
+                        <img src="conseil.png" alt="Conseil" class="menu-icon">
+                        <span class="menu-text">Conseil</span>
+                    </div>
+                    <div class="menu-item" onclick="showPage('page-motivation')">
+                        <img src="motivation.png" alt="Motivation" class="menu-icon">
+                        <span class="menu-text">Motivation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 9: Série L -->
+        <div id="page-serie-l" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-main')">✕</button>
+                <div class="page-title">Les Matières</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="subjects-grid" id="subjectsGrid"></div>
+        </div>
+
+        <!-- Page 10: Leçons (par matière) -->
+        <div id="page-lessons" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-serie-l')">✕</button>
+                <div class="header-title" id="subject-title">Matière</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="tabs">
+                <div class="tab active" data-tab="lesson">Leçon</div>
+                <div class="tab unread" data-tab="bac">Sujet du bac</div>
+                <div class="tab" data-tab="note">Note</div>
+                <div class="tab" data-tab="summary">Résumé</div>
+            </div>
+            <div class="content-container tab-content" id="lessonTab">
+                <div id="lessonList"></div>
+            </div>
+            <div class="content-container tab-content hidden" id="bacTab">
+                <div id="bacList"></div>
+            </div>
+            <div class="content-container tab-content hidden" id="noteTab">
+                <button class="add-note-btn" id="addNoteBtn">Ajouter une note</button>
+                <div id="noteList"></div>
+            </div>
+            <div class="content-container tab-content hidden" id="summaryTab">
+                <div id="summaryList"></div>
+            </div>
+        </div>
+
+        <!-- Pages placeholders pour Série S, Professeur, Moral, Conseil, Motivation -->
+        <div id="page-serie-s" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-main')">✕</button>
+                <div class="page-title">Série S</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
             <div class="content">
-                <h1 class="question">Bienvenue sur BAC SN !</h1>
-                <p>Page principale (à développer).</p>
+                <p>Contenu à définir pour Série S.</p>
+            </div>
+        </div>
+        <div id="page-professeur" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-main')">✕</button>
+                <div class="page-title">Je suis professeur</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="content">
+                <p>Contenu à définir pour Je suis professeur.</p>
+            </div>
+        </div>
+        <div id="page-moral" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-main')">✕</button>
+                <div class="page-title">Moral</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="content">
+                <p>Contenu à définir pour Moral.</p>
+            </div>
+        </div>
+        <div id="page-conseil" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-main')">✕</button>
+                <div class="page-title">Conseil</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="content">
+                <p>Contenu à définir pour Conseil.</p>
+            </div>
+        </div>
+        <div id="page-motivation" class="page hidden">
+            <div class="header">
+                <button class="back-button" onclick="showPage('page-main')">✕</button>
+                <div class="page-title">Motivation</div>
+                <div class="settings-icon">⚙️</div>
+            </div>
+            <div class="content">
+                <p>Contenu à définir pour Motivation.</p>
             </div>
         </div>
     </div>
+    <script src="quotes.js"></script>
+    <script src="maths.js"></script>
+    <script src="francais.js"></script>
+    <script src="histoire-geo.js"></script>
+    <script src="philosophie.js"></script>
+    <script src="physique-chimie.js"></script>
+    <script src="anglais.js"></script>
+    <script src="espagnol.js"></script>
+    <script src="eps.js"></script>
+    <script src="dessin.js"></script>
+    <script src="bibliotheque.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
